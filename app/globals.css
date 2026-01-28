@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* --------------------------------------------------
+   1. THEME TOKENS & ANIMATIONS
+-------------------------------------------------- */
+@theme {
+  /* Define custom keyframes */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --------------------------------------------------
+   2. ROOT VARIABLES
+-------------------------------------------------- */
+:root {
+  /* Base - Deep Dark */
+  --background: #050505;
+  --foreground: #fafafa;
+
+  /* Primary Accents */
+  --primary-glow: rgba(139, 92, 246, 0.5);
+  --secondary-glow: rgba(6, 182, 212, 0.5);
+
+  /* Glass Borders */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+
+  /* Glass Surfaces */
+  --glass-surface: rgba(255, 255, 255, 0.03);
+  --glass-surface-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* --------------------------------------------------
+   3. BASE LAYER
+-------------------------------------------------- */
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+
+    /* FIX: Added @apply here */
+    @apply antialiased selection:bg-cyan-500/30 selection:text-cyan-100;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* --------------------------------------------------
+   4. COMPONENT LAYER
+-------------------------------------------------- */
+@layer components {
+  /* Level 1: Standard Glass */
+  .glass-panel {
+    @apply bg-[var(--glass-surface)] 
+           backdrop-blur-xl 
+           border border-[var(--glass-border)] 
+           shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
+  }
+
+  /* Level 2: High Interaction Glass */
+  .glass-btn {
+    @apply relative overflow-hidden
+           bg-[rgba(255,255,255,0.05)] 
+           backdrop-blur-md 
+           border border-[var(--glass-border)] 
+           text-white
+           transition-all duration-300 ease-out;
+  }
+
+  .glass-btn:hover {
+    @apply bg-[rgba(255,255,255,0.1)] 
+           border-[var(--glass-border-hover)]
+           shadow-[0_0_20px_rgba(255,255,255,0.1)]
+           scale-[1.02];
+  }
+
+  .glass-btn:active {
+    @apply scale-[0.98];
+  }
+
+  /* Level 3: Heavy Glass (Navbar) */
+  .glass-heavy {
+    @apply bg-[rgba(5,5,5,0.7)] 
+           backdrop-blur-2xl 
+           border-b border-[var(--glass-border)];
+  }
+
+  /* Text Gradient Utility */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400;
+  }
+}
+
+/* --------------------------------------------------
+   5. UTILITIES
+-------------------------------------------------- */
+@layer utilities {
+  .glow-blob {
+    @apply absolute rounded-full mix-blend-screen filter blur-[100px] opacity-40 animate-pulse-slow pointer-events-none;
+  }
+
+  .shimmer-overlay {
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer;
+  }
 }
