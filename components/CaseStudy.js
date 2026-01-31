@@ -1,9 +1,13 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import {
   ExternalLink,
-  Github,
   Database,
   Lock,
   Users,
@@ -13,14 +17,18 @@ import {
   Home,
   User,
   Activity,
+  Hand, // Imported Hand icon
 } from "lucide-react";
-
 import Image from "next/image";
 
 export default function CaseStudy() {
   const [activeTab, setActiveTab] = useState("Home");
+  const [isDragging, setIsDragging] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
-  // Define your tabs and their content (Placeholder colors for now)
+  const [direction, setDirection] = useState(0);
+
+  // Define tabs
   const tabs = [
     {
       name: "Home",
@@ -49,14 +57,51 @@ export default function CaseStudy() {
     },
   ];
 
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? "100%" : "-100%", // If going Next, enter from Right
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? "-100%" : "100%", // If going Next, exit to Left
+      opacity: 0,
+    }),
+  };
+
+  // Helper to handle drag end (Mobile Swipe Logic)
+  const handleDragEnd = (event, info) => {
+    setHasInteracted(true);
+    setIsDragging(false);
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+
+    // Swipe Left -> Go Next
+    if (offset < -50 || velocity < -500) {
+      const currentIndex = tabs.findIndex((t) => t.name === activeTab);
+      if (currentIndex < tabs.length - 1) {
+        setDirection(1); // Moving forward
+        setActiveTab(tabs[currentIndex + 1].name);
+      }
+    }
+    // Swipe Right -> Go Prev
+    else if (offset > 50 || velocity > 500) {
+      const currentIndex = tabs.findIndex((t) => t.name === activeTab);
+      if (currentIndex > 0) {
+        setDirection(-1); // Moving backward
+        setActiveTab(tabs[currentIndex - 1].name);
+      }
+    }
+  };
+
   return (
     <section
       id="work"
       className="relative py-32 px-4 md:px-8 max-w-7xl mx-auto"
     >
-      {/* BACKGROUND DECORATION */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-purple-900/20 rounded-full blur-[120px] -z-10" />
-
       {/* SECTION HEADLINE */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -73,13 +118,12 @@ export default function CaseStudy() {
 
       {/* MAIN GLASS CARD */}
       <div className="glass-panel rounded-[2rem] p-8 md:p-12 relative overflow-hidden group">
-        {/* Background Glow */}
         <div className="glow-blob bg-red-900/40 top-0 right-0 w-[500px] h-[500px] blur-[120px] -z-10 transition-opacity duration-700 group-hover:opacity-60" />
 
-        <div className="flex flex-col lg:flex-row gap-12 items-start relative z-10">
-          {/* LEFT COLUMN: THE LOGIC */}
-          <div className="flex-1 space-y-8 pt-4">
-            {/* Badges */}
+        {/* LAYOUT UPDATE: Stacked Flex (Vertical) */}
+        <div className="flex flex-col gap-16 relative z-10">
+          {/* 1. TEXT CONTENT (Top) */}
+          <div className="max-w-3xl space-y-8">
             <div className="flex flex-wrap gap-3">
               <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-300 text-xs font-bold border border-red-500/20 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -90,7 +134,6 @@ export default function CaseStudy() {
               </span>
             </div>
 
-            {/* Title & Description */}
             <div className="space-y-4">
               <h3 className="text-4xl md:text-5xl font-bold text-white">
                 Grimsy
@@ -112,46 +155,24 @@ export default function CaseStudy() {
               </p>
             </div>
 
-            {/* Key Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <FeatureItem
                 icon={<Lock className="w-4 h-4 text-cyan-400" />}
-                text="NextAuth & Middleware"
+                text="NextAuth"
               />
               <FeatureItem
                 icon={<Database className="w-4 h-4 text-purple-400" />}
-                text="PostgreSQL & Prisma"
+                text="PostgreSQL"
               />
               <FeatureItem
                 icon={<Users className="w-4 h-4 text-red-400" />}
-                text="Real-time Social Graph"
+                text="Social Graph"
               />
               <FeatureItem
                 icon={<Server className="w-4 h-4 text-yellow-400" />}
-                text="VPS Deployment"
+                text="VPS Deploy"
               />
             </div>
-
-            {/* Tech Stack Pills */}
-            <div className="flex flex-wrap gap-2 pt-2">
-              {[
-                "Next.js",
-                "PostgreSQL",
-                "Tailwind",
-                "Framer Motion",
-                "NextAuth",
-                "Prisma",
-              ].map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 text-xs text-gray-400 bg-white/5 rounded-md border border-white/5"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            {/* CTA Button */}
 
             <div className="flex flex-wrap gap-4 pt-4">
               <a
@@ -166,77 +187,157 @@ export default function CaseStudy() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: THE INTERACTIVE BROWSER */}
-          <div className="flex-1 w-full perspective-1000">
-            <div
-              className="
-              relative w-full aspect-video rounded-xl bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden flex flex-col
-              transition-transform duration-700 ease-out
-            "
-            >
-              {/* 1. BROWSER HEADER (The Interactive Mini-Nav) */}
-              <div className="h-12 bg-white/5 border-b border-white/5 flex items-center px-4 gap-4 select-none">
-                {/* Dots */}
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                </div>
-
-                {/* Grimsy URL Bar / Nav */}
-                <div className="flex-1 bg-black/40 rounded-md h-8 flex items-center px-3 gap-3 overflow-x-auto scrollbar-hide">
-                  <span className="text-red-500 font-bold text-xs tracking-wider mr-2">
-                    GRIMSY
-                  </span>
-
-                  {/* Mini Tabs */}
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.name}
-                      onClick={() => setActiveTab(tab.name)}
-                      className={`
-                         flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-medium transition-colors whitespace-nowrap
-                         ${activeTab === tab.name ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"}
-                       `}
-                    >
-                      {tab.icon}
-                      {tab.name}
-                    </button>
-                  ))}
-                </div>
+          {/* 2. THE VISUALS (Bottom) */}
+          <div className="w-full flex justify-center perspective-1000">
+            {/* --- MOBILE VIEW (Phone Mockup) --- 
+                Visible only on Small Screens (< md) 
+            */}
+            <div className="md:hidden relative w-[280px] h-[90vh] bg-black rounded-[3rem] border-8 border-gray-900 shadow-2xl overflow-hidden ring-1 ring-white/10">
+              {/* Dynamic Island / Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-xl z-20 flex justify-center items-center gap-2">
+                <div className="w-10 h-1 rounded-full bg-gray-800/50"></div>
+                <div className="w-1 h-1 rounded-full bg-blue-900/50"></div>
               </div>
 
-              {/* 2. THE SCREEN CONTENT (Animated Switcher) */}
-              <div className="relative flex-1 bg-black overflow-hidden group-hover:cursor-pointer">
-                <AnimatePresence mode="wait">
+              {/* Status Bar Mockup */}
+              <div className="absolute top-2 right-5 z-20 text-[10px] text-white font-mono">
+                5G
+              </div>
+
+              {/* DRAGGABLE SCREEN AREA */}
+              <motion.div
+                className="w-full h-full cursor-grab active:cursor-grabbing bg-gray-900"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragStart={() => setIsDragging(true)}
+                onDragEnd={handleDragEnd}
+              >
+                <AnimatePresence mode="popLayout" custom={isDragging}>
                   <motion.div
                     key={activeTab}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className={`absolute inset-0 bg-gradient-to-br ${tabs.find((t) => t.name === activeTab).color} flex items-center justify-center`}
+                    custom={direction} // Pass direction to variants
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="absolute inset-0"
                   >
                     <Image
-                      src={`/screenshots/${activeTab.toLowerCase()}.png`}
-                      alt={activeTab}
+                      src={`/screenshots/mobile-${activeTab.toLowerCase()}.jpg`}
+                      alt={`Grimsy Mobile ${activeTab} Screen`}
                       fill
-                      className="object-cover object-top"
+                      className="object-cover object-top pointer-events-none select-none"
+                      draggable={false}
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority={true}
                     />
-
-                    {/* <div className="text-center space-y-2">
-                      <div className="text-6xl opacity-20 font-black">
-                        {activeTab}
-                      </div>
-                      <div className="text-sm text-gray-400 font-mono border border-white/10 px-3 py-1 rounded-full bg-black/20 inline-block">
-                        /screenshots/{activeTab.toLowerCase()}.png
-                      </div>
-                    </div> */}
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Hover overlay to indicate clickable */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                {/* TUTORIAL HAND ANIMATION (Fades out after first interaction) */}
+                <AnimatePresence>
+                  {!hasInteracted && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none"
+                    >
+                      <motion.div
+                        animate={{ x: [0, 60, -60, 0] }} // Side to side swipe motion
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          repeatDelay: 1,
+                        }}
+                        className="bg-black/50 backdrop-blur-md p-3 rounded-full border border-white/10"
+                      >
+                        <Hand className="w-6 h-6 text-white" />
+                      </motion.div>
+                      <div className="absolute bottom-20 text-xs font-bold text-white/70 bg-black/30 px-3 py-1 rounded-full backdrop-blur">
+                        Swipe to Explore
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* Mobile Bottom Bar Mockup */}
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20"></div>
+            </div>
+
+            {/* --- DESKTOP VIEW (Browser Mockup) --- 
+                Visible only on Medium+ Screens (>= md)
+            */}
+            <div className="hidden md:block w-full">
+              <div
+                className="
+                relative w-full aspect-video rounded-xl bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden flex flex-col
+                hover:shadow-purple-500/10 transition-shadow duration-500
+              "
+              >
+                {/* Browser Header */}
+                <div className="h-12 bg-white/5 border-b border-white/5 flex items-center px-4 gap-4 select-none">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/50" />
+                  </div>
+
+                  {/* Interactive URL Bar */}
+                  <div className="flex-1 bg-black/40 rounded-md h-8 flex items-center px-3 gap-3">
+                    <span className="text-red-500 font-bold text-xs tracking-wider mr-2">
+                      GRIMSY
+                    </span>
+                    {tabs.map((tab) => (
+                      <button
+                        key={tab.name}
+                        onClick={() => setActiveTab(tab.name)}
+                        className={`
+                           flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-medium transition-colors
+                           ${activeTab === tab.name ? "bg-white/10 text-white" : "text-gray-500 hover:text-gray-300"}
+                         `}
+                      >
+                        {tab.icon}
+                        {tab.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Browser Content */}
+                <div className="relative flex-1 bg-black overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 bg-black "
+                    >
+                      {/* DESKTOP IMAGE PLACEHOLDER */}
+                      <Image
+                        src={`/screenshots/${activeTab.toLowerCase()}.png`} // Expects home.png, media.png, etc.
+                        alt={`Grimsy Desktop ${activeTab} Screen`}
+                        fill
+                        className="object-cover object-top"
+                        priority={true}
+                      />
+                      {/* <div className="text-center space-y-2 opacity-50">
+                        <div className="text-6xl font-black text-white/20">
+                          {activeTab}
+                        </div>
+                        <div className="text-xs font-mono text-white/40">
+                          desktop-{activeTab.toLowerCase()}.png
+                        </div>
+                      </div> */}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
           </div>
@@ -246,7 +347,6 @@ export default function CaseStudy() {
   );
 }
 
-// Helper for Feature List
 function FeatureItem({ icon, text }) {
   return (
     <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
