@@ -54,6 +54,9 @@ export default function CaseStudy() {
       id="work"
       className="relative py-32 px-4 md:px-8 max-w-7xl mx-auto"
     >
+      {/* BACKGROUND DECORATION */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-purple-900/20 rounded-full blur-[120px] -z-10" />
+
       {/* SECTION HEADLINE */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

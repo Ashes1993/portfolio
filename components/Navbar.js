@@ -20,6 +20,10 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      if (window.scrollY < 100) {
+        setActiveSection("");
+        return;
+      }
       const sections = navLinks.map((link) =>
         document.getElementById(link.href),
       );
@@ -101,7 +105,6 @@ export default function Navbar() {
             {!mobileMenuOpen && (
               <div className="hidden md:flex gap-2 text-sm font-medium text-gray-400">
                 {navLinks.slice(0, 3).map((link) => {
-                  // Exclude Contact from middle links
                   const isActive = activeSection === link.href;
                   return (
                     <a

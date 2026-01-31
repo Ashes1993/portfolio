@@ -6,8 +6,9 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20">
       {/* 1. BACKGROUND BLOBS */}
-      <div className="glow-blob bg-purple-600 top-[-10%] left-[-10%] w-[80vw] h-[80vw] md:w-[500px] md:h-[500px]"></div>
-      <div className="glow-blob bg-cyan-600 bottom-[-10%] right-[-10%] w-[80vw] h-[80vw] md:w-[600px] md:h-[600px] animation-delay-2000"></div>
+      <div className="glow-blob bg-purple-600 top-[-10%] left-[2%] w-[80vw] h-[80vw] md:w-[500px] md:h-[400px]"></div>
+      <div className="glow-blob bg-cyan-600 bottom-[30%] right-[2%] w-[80vw] h-[80vw] md:w-[500px] md:h-[400px] animation-delay-2000"></div>
+      {/* <div className="glow-blob bg-linear-to-br from-purple-600 to-cyan-600 w-[80vw] h-[80%]"></div> */}
 
       {/* 2. MAIN CONTENT */}
       <div className="z-10 text-center max-w-4xl space-y-8 relative">
