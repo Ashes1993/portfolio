@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Check, Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
 
   // REPLACE WITH YOUR ACTUAL EMAIL
-  const email = "your.email@example.com";
+  const email = "ashkaneslamii1993@gmail.com";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email);
@@ -93,12 +93,12 @@ export default function Footer() {
         <div className="flex justify-center gap-6 mb-12">
           <SocialButton
             icon={<Github className="w-6 h-6" />}
-            href="https://github.com/yourusername"
+            href="https://github.com/Ashes1993"
             label="GitHub"
           />
           <SocialButton
             icon={<Linkedin className="w-6 h-6" />}
-            href="https://linkedin.com/in/yourusername"
+            href="www.linkedin.com/in/ashkan-eslami-3982a7187"
             label="LinkedIn"
           />
           {/* Add more if needed */}
