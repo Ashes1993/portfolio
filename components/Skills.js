@@ -224,7 +224,7 @@ function TerminalDemo() {
           <div className="w-3 h-3 rounded-full bg-green-500/80" />
         </div>
         <div className="text-xs font-mono text-gray-500">
-          root@production-server:~
+          user@production-server:~
         </div>
         <div className="w-10"></div> {/* Spacer for centering text */}
       </div>
@@ -234,7 +234,7 @@ function TerminalDemo() {
         {/* FIRST COMMAND LINE */}
         {step > 0 && (
           <div className="flex items-center whitespace-nowrap">
-            <span className="text-green-400 mr-2">root@production-server</span>
+            <span className="text-green-400 mr-2">user@production-server</span>
             <span className="text-blue-400 mr-2">~ #</span>
             <span>{cmd1}</span>
             {/* Blinking cursor only shows here if we are on step 1 */}
@@ -286,7 +286,7 @@ function TerminalDemo() {
         {/* SECOND COMMAND LINE (Appears after output) */}
         {step >= 2 && (
           <div className="flex items-center whitespace-nowrap">
-            <span className="text-green-400 mr-2">root@production-server</span>
+            <span className="text-green-400 mr-2">user@production-server</span>
             <span className="text-blue-400 mr-2">~ #</span>
             <span>{cmd2}</span>
             {/* Blinking cursor moves here for steps 2 and 3 */}

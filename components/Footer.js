@@ -98,7 +98,7 @@ export default function Footer() {
           />
           <SocialButton
             icon={<Linkedin className="w-6 h-6" />}
-            href="www.linkedin.com/in/ashkan-eslami-3982a7187"
+            href="https://www.linkedin.com/in/ashkan-eslami-3982a7187"
             label="LinkedIn"
           />
           {/* Add more if needed */}
