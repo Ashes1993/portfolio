@@ -17,7 +17,7 @@ import {
   Home,
   User,
   Activity,
-  Hand, // Imported Hand icon
+  Hand,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -59,7 +59,7 @@ export default function CaseStudy() {
 
   const variants = {
     enter: (direction) => ({
-      x: direction > 0 ? "100%" : "-100%", // If going Next, enter from Right
+      x: direction > 0 ? "100%" : "-100%",
       opacity: 0,
     }),
     center: {
@@ -67,7 +67,7 @@ export default function CaseStudy() {
       opacity: 1,
     },
     exit: (direction) => ({
-      x: direction > 0 ? "-100%" : "100%", // If going Next, exit to Left
+      x: direction > 0 ? "-100%" : "100%",
       opacity: 0,
     }),
   };
@@ -189,9 +189,7 @@ export default function CaseStudy() {
 
           {/* 2. THE VISUALS (Bottom) */}
           <div className="w-full flex justify-center perspective-1000">
-            {/* --- MOBILE VIEW (Phone Mockup) --- 
-                Visible only on Small Screens (< md) 
-            */}
+            {/* --- MOBILE VIEW (Phone Mockup) --- */}
             <div className="md:hidden relative w-[100%] h-[85vh] bg-black rounded-[3rem] border-8 border-gray-900 shadow-2xl overflow-hidden ring-1 ring-white/10">
               {/* Dynamic Island / Notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-xl z-20 flex justify-center items-center gap-2">
@@ -206,7 +204,8 @@ export default function CaseStudy() {
 
               {/* DRAGGABLE SCREEN AREA */}
               <motion.div
-                className="w-full h-full cursor-grab active:cursor-grabbing bg-gray-900"
+                // FIX: Changed bg-gray-900 to bg-black and added touch-none to prevent browser native swipe highlighting
+                className="w-full h-full cursor-grab active:cursor-grabbing bg-black touch-none"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
@@ -216,13 +215,14 @@ export default function CaseStudy() {
                 <AnimatePresence mode="popLayout" custom={isDragging}>
                   <motion.div
                     key={activeTab}
-                    custom={direction} // Pass direction to variants
+                    custom={direction}
                     variants={variants}
                     initial="enter"
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0"
+                    // FIX: Added explicit bg-black to prevent any background bleed during the sliding animation
+                    className="absolute inset-0 bg-black"
                   >
                     <Image
                       src={`/screenshots/mobile-${activeTab.toLowerCase()}.jpg`}
@@ -231,12 +231,12 @@ export default function CaseStudy() {
                       className="object-cover object-top pointer-events-none select-none"
                       draggable={false}
                       sizes="(max-width: 768px) 100vw, 300px"
-                      priority={true}
+                      // FIX: Removed priority={true} to stop the preload mismatch warning
                     />
                   </motion.div>
                 </AnimatePresence>
 
-                {/* TUTORIAL HAND ANIMATION (Fades out after first interaction) */}
+                {/* TUTORIAL HAND ANIMATION */}
                 <AnimatePresence>
                   {!hasInteracted && (
                     <motion.div
@@ -246,7 +246,7 @@ export default function CaseStudy() {
                       className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none"
                     >
                       <motion.div
-                        animate={{ x: [0, 60, -60, 0] }} // Side to side swipe motion
+                        animate={{ x: [0, 60, -60, 0] }}
                         transition={{
                           duration: 2,
                           repeat: Infinity,
@@ -269,9 +269,7 @@ export default function CaseStudy() {
               <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20"></div>
             </div>
 
-            {/* --- DESKTOP VIEW (Browser Mockup) --- 
-                Visible only on Medium+ Screens (>= md)
-            */}
+            {/* --- DESKTOP VIEW (Browser Mockup) --- */}
             <div className="hidden md:block w-full">
               <div
                 className="
@@ -319,22 +317,14 @@ export default function CaseStudy() {
                       transition={{ duration: 0.3 }}
                       className="absolute inset-0 bg-black "
                     >
-                      {/* DESKTOP IMAGE PLACEHOLDER */}
                       <Image
-                        src={`/screenshots/${activeTab.toLowerCase()}.png`} // Expects home.png, media.png, etc.
+                        src={`/screenshots/${activeTab.toLowerCase()}.png`}
                         alt={`Grimsy Desktop ${activeTab} Screen`}
                         fill
                         className="object-cover object-top"
-                        priority={true}
+                        // FIX: Added sizes prop and removed priority={true}
+                        sizes="(min-width: 768px) 100vw, 50vw"
                       />
-                      {/* <div className="text-center space-y-2 opacity-50">
-                        <div className="text-6xl font-black text-white/20">
-                          {activeTab}
-                        </div>
-                        <div className="text-xs font-mono text-white/40">
-                          desktop-{activeTab.toLowerCase()}.png
-                        </div>
-                      </div> */}
                     </motion.div>
                   </AnimatePresence>
                 </div>
