@@ -6,7 +6,8 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-32 px-4 md:px-8 max-w-7xl mx-auto"
+      // FIX: Added overflow-hidden to prevent horizontal scrollbars from Framer Motion's X-axis animations
+      className="relative py-32 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden"
     >
       {/* SECTION HEADER */}
       <motion.div
@@ -32,10 +33,14 @@ export default function About() {
         >
           <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
             <p>
-              I didn't take the traditional path. For the past{" "}
-              <span className="text-white font-semibold">two years</span>, I've
-              been obsessively self-educating, moving past "tutorial hell" to
-              build real, complex software.
+              I didn't take the traditional path. With over a decade of
+              professional experience in research, data mining, and client
+              support, I bring a unique, logic-driven perspective to
+              engineering. For the past{" "}
+              <span className="text-white font-semibold">three years</span>,
+              I've been obsessively self-educating in frontend and full-stack
+              development, moving past "tutorial hell" to build real, complex
+              software.
             </p>
             <p>
               My philosophy is simple:{" "}
@@ -95,7 +100,8 @@ export default function About() {
               <StatItem
                 icon={<Code className="w-5 h-5 text-cyan-400" />}
                 label="Experience"
-                value="2+ Years Deep Dive"
+                // FIX: Updated to reflect 3 years of actual study
+                value="3+ Years Deep Dive"
               />
               <StatItem
                 icon={<Cpu className="w-5 h-5 text-emerald-400" />}
