@@ -117,7 +117,7 @@ export default function CaseStudy() {
       </motion.div>
 
       {/* MAIN GLASS CARD */}
-      <div className="glass-panel rounded-[2rem] p-8 md:p-12 relative overflow-hidden group">
+      <div className="glass-panel rounded-[2rem] px-4 py-8 md:p-12 relative overflow-hidden group">
         <div className="glow-blob bg-red-900/40 top-0 right-0 w-[500px] h-[500px] blur-[120px] -z-10 transition-opacity duration-700 group-hover:opacity-60" />
 
         {/* LAYOUT UPDATE: Stacked Flex (Vertical) */}
@@ -192,7 +192,7 @@ export default function CaseStudy() {
             {/* --- MOBILE VIEW (Phone Mockup) --- 
                 Visible only on Small Screens (< md) 
             */}
-            <div className="md:hidden relative w-[280px] h-[90vh] bg-black rounded-[3rem] border-8 border-gray-900 shadow-2xl overflow-hidden ring-1 ring-white/10">
+            <div className="md:hidden relative w-[100%] h-[85vh] bg-black rounded-[3rem] border-8 border-gray-900 shadow-2xl overflow-hidden ring-1 ring-white/10">
               {/* Dynamic Island / Notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-xl z-20 flex justify-center items-center gap-2">
                 <div className="w-10 h-1 rounded-full bg-gray-800/50"></div>

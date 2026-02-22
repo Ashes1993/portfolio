@@ -8,7 +8,6 @@ export default function Hero() {
       {/* 1. BACKGROUND BLOBS */}
       <div className="glow-blob bg-purple-600 top-[-10%] left-[2%] w-[80vw] h-[80vw] md:w-[500px] md:h-[400px]"></div>
       <div className="glow-blob bg-cyan-600 bottom-[30%] right-[2%] w-[80vw] h-[80vw] md:w-[500px] md:h-[400px] animation-delay-2000"></div>
-      {/* <div className="glow-blob bg-linear-to-br from-purple-600 to-cyan-600 w-[80vw] h-[80%]"></div> */}
 
       {/* 2. MAIN CONTENT */}
       <div className="z-10 text-center max-w-4xl space-y-8 relative">
@@ -62,7 +61,7 @@ export default function Hero() {
             onClick={() =>
               document
                 .getElementById("work")
-                .scrollIntoView({ behavior: "smooth" })
+                ?.scrollIntoView({ behavior: "smooth" })
             }
             className="group relative px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
@@ -74,7 +73,7 @@ export default function Hero() {
             onClick={() =>
               document
                 .getElementById("contact")
-                .scrollIntoView({ behavior: "smooth" })
+                ?.scrollIntoView({ behavior: "smooth" })
             }
             className="glass-btn px-8 py-4 rounded-full font-bold text-lg w-full sm:w-auto hover:scale-105 transition-transform duration-300"
           >
