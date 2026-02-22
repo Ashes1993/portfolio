@@ -99,29 +99,19 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         ref={navRef}
-        className="relative pointer-events-auto"
+        className="relative pointer-events-auto flex justify-center w-full md:w-auto"
       >
-        {/* CONTAINER: The Expanding Glass Pill */}
-        <motion.div
-          animate={{
-            width: mobileMenuOpen ? (isDesktop ? 300 : "100%") : "auto",
-          }}
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+        {/* CONTAINER */}
+        <div
           className={`
             relative z-50 rounded-[2rem] border border-white/10 flex flex-col overflow-hidden 
-            transition-colors duration-300 ease-out 
-            transform-gpu will-change-transform /* FIX: Hardware accelerate the main container */
+            transition-all duration-300 ease-out transform-gpu will-change-transform
+            w-[calc(100vw-2rem)] md:w-auto
             ${scrolled || mobileMenuOpen ? "bg-black/60 backdrop-blur-2xl shadow-2xl" : "bg-black/20 backdrop-blur-xl shadow-lg"}
           `}
-          style={{ width: mobileMenuOpen ? 300 : "auto" }}
         >
-          {/* HEADER ROW (Logo + Button) */}
-          <div
-            className={`
-            flex items-center justify-between px-6 py-3
-            ${mobileMenuOpen ? "w-full" : "gap-8 min-w-[300px] md:min-w-[500px]"}
-          `}
-          >
+          {/* HEADER ROW */}
+          <div className="flex items-center justify-between px-6 py-3 w-full md:gap-8 md:min-w-[500px]">
             {/* Logo */}
             <span
               onClick={() => {
@@ -136,6 +126,7 @@ export default function Navbar() {
             {/* DESKTOP LINKS */}
             {!mobileMenuOpen && (
               <div className="hidden md:flex gap-2 text-sm font-medium text-gray-400">
+                {/* RESTORED: .slice(0, 3) to keep 'Contact' out of this list */}
                 {navLinks.slice(0, 3).map((link) => {
                   const isActive = activeSection === link.href;
                   return (
@@ -145,7 +136,7 @@ export default function Navbar() {
                       onClick={(e) => scrollToSection(e, link.href)}
                       className={`
                         relative px-4 py-2 rounded-full transition-all duration-300 group
-                        transform-gpu /* FIX: Hardware accelerate the hover elements */
+                        transform-gpu
                         ${
                           isActive
                             ? "text-white"
@@ -179,7 +170,7 @@ export default function Navbar() {
             {!mobileMenuOpen && (
               <button
                 onClick={(e) => scrollToSection(e, "contact")}
-                className="hidden md:block relative group overflow-hidden bg-white text-black px-5 py-2 rounded-full text-sm font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-transform active:scale-95 whitespace-nowrap transform-gpu"
+                className="hidden md:block cursor-pointer relative group overflow-hidden bg-white text-black px-5 py-2 rounded-full text-sm font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-transform active:scale-95 whitespace-nowrap transform-gpu"
               >
                 <span
                   className={`absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 transition-opacity duration-300 ease-out ${activeSection === "contact" ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
@@ -212,6 +203,7 @@ export default function Navbar() {
                 className="overflow-hidden md:hidden border-t border-white/5"
               >
                 <div className="flex flex-col p-4 gap-2">
+                  {/* Note: Mobile keeps all 4 links, rendering Contact as "Let's Talk" */}
                   {navLinks.map((link) => {
                     const isContact = link.href === "contact";
                     const isActive = activeSection === link.href;
@@ -223,7 +215,7 @@ export default function Navbar() {
                         onClick={(e) => scrollToSection(e, link.href)}
                         className={`
                           text-center py-3 rounded-xl text-sm font-medium transition-all
-                          transform-gpu /* FIX: Hardware accelerate the mobile links */
+                          transform-gpu
                           ${
                             isContact
                               ? isActive
@@ -243,7 +235,7 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </motion.nav>
     </header>
   );
