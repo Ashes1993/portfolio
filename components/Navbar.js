@@ -7,7 +7,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(true); // Added to safeguard Framer Motion
+  const [isDesktop, setIsDesktop] = useState(true);
   const navRef = useRef(null);
 
   const navLinks = [
@@ -17,10 +17,10 @@ export default function Navbar() {
     { name: "Contact", href: "contact" },
   ];
 
-  // 1. Desktop Detection (Prevents mobile calculation bugs)
+  // 1. Desktop Detection
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -31,13 +31,11 @@ export default function Navbar() {
       const currentScroll = window.scrollY;
       setScrolled(currentScroll > 50);
 
-      // Reset if at the very top
       if (currentScroll < 100) {
         setActiveSection("");
         return;
       }
 
-      // Aggressive Bottom-of-Page Detection
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
 
@@ -93,10 +91,9 @@ export default function Navbar() {
       className="fixed top-6 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none"
       style={{
         transform: "translateZ(0)",
-        WebkitTransform: "translateZ(0)", // Apple WebKit hardware lock
+        WebkitTransform: "translateZ(0)",
       }}
     >
-      {/* 2. FRAMER MOTION WRAPPER: Handles the slide-down entrance animation safely inside */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -112,7 +109,8 @@ export default function Navbar() {
           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
           className={`
             relative z-50 rounded-[2rem] border border-white/10 flex flex-col overflow-hidden 
-            transition-colors duration-300 ease-out
+            transition-colors duration-300 ease-out 
+            transform-gpu will-change-transform /* FIX: Hardware accelerate the main container */
             ${scrolled || mobileMenuOpen ? "bg-black/60 backdrop-blur-2xl shadow-2xl" : "bg-black/20 backdrop-blur-xl shadow-lg"}
           `}
           style={{ width: mobileMenuOpen ? 300 : "auto" }}
@@ -147,6 +145,7 @@ export default function Navbar() {
                       onClick={(e) => scrollToSection(e, link.href)}
                       className={`
                         relative px-4 py-2 rounded-full transition-all duration-300 group
+                        transform-gpu /* FIX: Hardware accelerate the hover elements */
                         ${
                           isActive
                             ? "text-white"
@@ -166,7 +165,7 @@ export default function Navbar() {
                         />
                       )}
                       <span
-                        className={`relative z-10 transition-all duration-300 ${!isActive && "group-hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]"}`}
+                        className={`relative z-10 transition-all duration-300 ${!isActive ? "group-hover:[text-shadow:0_0_12px_rgba(168,85,247,0.8)]" : ""}`}
                       >
                         {link.name}
                       </span>
@@ -180,7 +179,7 @@ export default function Navbar() {
             {!mobileMenuOpen && (
               <button
                 onClick={(e) => scrollToSection(e, "contact")}
-                className="hidden md:block relative group overflow-hidden bg-white text-black px-5 py-2 rounded-full text-sm font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-transform active:scale-95 whitespace-nowrap"
+                className="hidden md:block relative group overflow-hidden bg-white text-black px-5 py-2 rounded-full text-sm font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-transform active:scale-95 whitespace-nowrap transform-gpu"
               >
                 <span
                   className={`absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 transition-opacity duration-300 ease-out ${activeSection === "contact" ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
@@ -224,6 +223,7 @@ export default function Navbar() {
                         onClick={(e) => scrollToSection(e, link.href)}
                         className={`
                           text-center py-3 rounded-xl text-sm font-medium transition-all
+                          transform-gpu /* FIX: Hardware accelerate the mobile links */
                           ${
                             isContact
                               ? isActive

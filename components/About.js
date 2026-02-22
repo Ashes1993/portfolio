@@ -6,7 +6,6 @@ export default function About() {
   return (
     <section
       id="about"
-      // FIX: Added overflow-hidden to prevent horizontal scrollbars from Framer Motion's X-axis animations
       className="relative py-32 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden"
     >
       {/* SECTION HEADER */}
@@ -65,7 +64,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* RIGHT: THE "SYSTEM SPECS" CARD (Avatar Replacement) */}
+        {/* RIGHT: THE "SYSTEM SPECS" CARD */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -73,11 +72,12 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="relative"
         >
-          {/* Decorative Glow Behind */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 blur-3xl -z-10 rounded-full" />
+          {/* FIX: Removed the brutal `blur-3xl` background element.
+            Replaced it with a clean, GPU-safe box-shadow directly on the panel.
+          */}
 
           {/* The Glass Terminal */}
-          <div className="glass-panel p-8 rounded-2xl border border-white/10 relative overflow-hidden">
+          <div className="glass-panel p-8 rounded-2xl border border-white/10 relative overflow-hidden bg-black/40 shadow-[0_0_80px_-20px_rgba(168,85,247,0.15)]">
             {/* Terminal Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
               <div className="flex gap-2">
@@ -100,7 +100,6 @@ export default function About() {
               <StatItem
                 icon={<Code className="w-5 h-5 text-cyan-400" />}
                 label="Experience"
-                // FIX: Updated to reflect 3 years of actual study
                 value="3+ Years Deep Dive"
               />
               <StatItem
