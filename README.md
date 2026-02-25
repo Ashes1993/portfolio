@@ -41,3 +41,15 @@ This portfolio is not just a static document; it is a demonstration of that phil
 - **Animation:** Framer Motion (Iterative layout animations, physics-based dragging)
 - **Icons:** Lucide React
 - **Deployment:** Vercel (Serverless)
+
+## 📫 Let's Connect
+
+I am currently looking for opportunities to build robust, scalable software and tackle complex frontend engineering challenges.
+
+- **GitHub:** [github.com/Ashes1993](https://github.com/Ashes1993)
+- **LinkedIn:** [https://www.linkedin.com/in/ashkan-eslami-3982a7187/](https://www.linkedin.com/in/ashkan-eslami-3982a7187/)
+- **Live Portfolio:** [asheswebportfolio.vercel.app](https://asheswebportfolio.vercel.app)
+
+---
+
+_Designed and engineered by Ashkan Eslami._
