@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
 
-## Getting Started
+# Developer Portfolio // Ashkan Eslami
 
-First, run the development server:
+A high-performance, interactive frontend architecture designed to showcase full-stack engineering capabilities. Built with an obsessive focus on rendering performance, raw UI engineering, and seamless state management.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)](https://www.framer.com/motion/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[View Live Project](https://asheswebportfolio.vercel.app) • [Report Bug](https://github.com/Ashes1993/portfolio/issues)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚡ Engineering Philosophy
 
-To learn more about Next.js, take a look at the following resources:
+I didn't take the traditional computer science path. My perspective is strictly logic-driven, focused on solving business problems through efficient, scalable architecture. My core philosophy is simple: **Shipping is the only metric that matters.**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This portfolio is not just a static document; it is a demonstration of that philosophy, featuring complex state interactions, custom media handling, and hardware-accelerated animations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Core Architecture & Features
 
-## Deploy on Vercel
+### UI / UX Engineering
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Hardware-Accelerated Rendering:** Strategic use of `transform-gpu` and `will-change` properties to isolate layers and completely eliminate "composite explosion" layout thrashing during heavy blur and glassmorphism transitions.
+- **Zero-Lag Navigation:** A custom scroll-spy navigation system that seamlessly transitions from CSS-driven mobile layouts to Framer Motion desktop animations without taxing device CPUs.
+- **Interactive Data Visualization:** Custom-built "JSON-to-UI" sliders that dynamically demonstrate data transformation pipelines in real-time.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Featured Projects Integration
+
+- **[Grimsy](https://grimsy.top):** Showcased via an interactive, draggable mobile mockup utilizing Framer Motion gesture controls and physics-based boundaries.
+- **[Archive Discovery](https://archive-discovery.vercel.app):** Integrated via a custom-engineered HTML5 video player built completely from scratch. Bypasses native browser limits to provide DOM-based volume controls, mobile tap-to-seek logic, and accurate buffering states.
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (React)
+- **Styling:** Tailwind CSS (with complex custom variants and arbitrary values)
+- **Animation:** Framer Motion (Iterative layout animations, physics-based dragging)
+- **Icons:** Lucide React
+- **Deployment:** Vercel (Serverless)
