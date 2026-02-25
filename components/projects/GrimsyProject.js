@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import FeatureItem from "./FeatureItem";
+import FeatureItem from "../ui/FeatureItem";
 import {
   ExternalLink,
   Database,

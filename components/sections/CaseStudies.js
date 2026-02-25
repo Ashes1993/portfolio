@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import GrimsyProject from "./GrimsyProject";
-import ArchiveDiscoveryProject from "./ArchiveDiscoveryProject";
+import GrimsyProject from "../projects/GrimsyProject";
+import ArchiveDiscoveryProject from "../projects/ArchiveDiscoveryProject";
 
 // ======================================================================
 // 1. MAIN PARENT COMPONENT
 // ======================================================================
-export default function CaseStudy() {
+export default function CaseStudies() {
   return (
     <section
       id="work"
