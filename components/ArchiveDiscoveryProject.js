@@ -58,10 +58,9 @@ export default function ArchiveDiscoveryProject() {
             />
           </div>
 
-          {/* FIX: Added the live website link button */}
           <div className="flex flex-wrap gap-4 pt-4">
             <a
-              href="https://your-archive-link.com" // <-- INSERT YOUR REAL LINK HERE
+              href="https://archive-discovery.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
