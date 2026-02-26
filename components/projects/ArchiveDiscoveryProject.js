@@ -149,7 +149,6 @@ function DataToUISlider() {
             alt="Background Glow Effect"
             fill
             className="object-cover object-center"
-            quality={31} // Aggressive compression since it is heavily blurred
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
@@ -164,7 +163,6 @@ function DataToUISlider() {
               fill
               className="object-cover transition-transform duration-700 group-hover/card:scale-105 opacity-90 group-hover/card:opacity-100"
               sizes="(max-width: 640px) 180px, 220px"
-              quality={85}
             />
             {/* Verified Badge */}
             <div className="absolute top-2 right-2 bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-[9px] font-bold px-1.5 py-0.5 rounded-sm uppercase tracking-wider shadow-black/50 shadow-md">
