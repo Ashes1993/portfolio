@@ -143,7 +143,6 @@ function DataToUISlider() {
     >
       {/* BACKGROUND LAYER: RENDERED UI (Right Side) */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {/* FIX 1: Replaced CSS background image with Next.js Image component for heavy optimization */}
         <div className="absolute inset-0 opacity-20 blur-2xl overflow-hidden pointer-events-none">
           <Image
             src="/notld.jpg"
@@ -164,7 +163,7 @@ function DataToUISlider() {
               alt="Night of the Living Dead"
               fill
               className="object-cover transition-transform duration-700 group-hover/card:scale-105 opacity-90 group-hover/card:opacity-100"
-              sizes="(max-width: 640px) 180px, 220px" // FIX 2: Tighter sizes configuration for the actual card
+              sizes="(max-width: 640px) 180px, 220px"
               quality={85}
             />
             {/* Verified Badge */}

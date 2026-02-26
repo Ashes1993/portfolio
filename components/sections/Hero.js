@@ -65,7 +65,7 @@ export default function Hero() {
             }
             className="group relative px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
-            See The Project
+            See The Projects
             <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform duration-300" />
           </button>
 
