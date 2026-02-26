@@ -76,7 +76,7 @@ export default function ArchiveDiscoveryProject() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* LEFT: Raw JSON to UI Slider */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-sm font-mono text-gray-500 mb-2">
+            <div className="flex items-center gap-2 text-sm font-mono text-gray-400 mb-2">
               <span className="text-blue-400">Step 1:</span> Data Transformation
             </div>
             <DataToUISlider />
@@ -84,7 +84,7 @@ export default function ArchiveDiscoveryProject() {
 
           {/* RIGHT: The Custom Video Player */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-sm font-mono text-gray-500 mb-2">
+            <div className="flex items-center gap-2 text-sm font-mono text-gray-400 mb-2">
               <span className="text-amber-400">Step 2:</span> Custom Media
               Engineering
             </div>
@@ -143,11 +143,19 @@ function DataToUISlider() {
     >
       {/* BACKGROUND LAYER: RENDERED UI (Right Side) */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {/* Background ambient glow */}
-        <div className="absolute inset-0 bg-[url('/notld.jpg')] bg-cover bg-center opacity-20 blur-2xl"></div>
+        {/* FIX 1: Replaced CSS background image with Next.js Image component for heavy optimization */}
+        <div className="absolute inset-0 opacity-20 blur-2xl overflow-hidden pointer-events-none">
+          <Image
+            src="/notld.jpg"
+            alt="Background Glow"
+            fill
+            className="object-cover object-center"
+            quality={30} // Aggressive compression since it is heavily blurred
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
 
         {/* EXACT MEDIA GRID CARD REPLICA */}
-        {/* FIX: Removed margins so it centers perfectly. Added group/card named group. */}
         <div className="relative w-[180px] sm:w-[220px] flex flex-col bg-[#121212] rounded-md overflow-hidden border border-white/10 shadow-2xl hover:border-amber-500/50 transition-all duration-300 group/card">
           {/* POSTER CONTAINER */}
           <div className="aspect-[2/3] w-full relative border-b border-white/10 bg-black overflow-hidden">
@@ -156,7 +164,8 @@ function DataToUISlider() {
               alt="Night of the Living Dead"
               fill
               className="object-cover transition-transform duration-700 group-hover/card:scale-105 opacity-90 group-hover/card:opacity-100"
-              sizes="220px"
+              sizes="(max-width: 640px) 180px, 220px" // FIX 2: Tighter sizes configuration for the actual card
+              quality={85}
             />
             {/* Verified Badge */}
             <div className="absolute top-2 right-2 bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-[9px] font-bold px-1.5 py-0.5 rounded-sm uppercase tracking-wider shadow-black/50 shadow-md">
@@ -170,7 +179,6 @@ function DataToUISlider() {
 
           {/* INFO SECTION */}
           <div className="p-3 sm:p-4 flex flex-col flex-grow bg-[#121212]">
-            {/* FIX: Replaced group-hover with group-hover/card */}
             <h3 className="text-sm sm:text-base font-bold text-gray-200 line-clamp-1 mb-1 group-hover/card:text-amber-500 transition-colors font-sans tracking-wide">
               Night of the Living Dead
             </h3>

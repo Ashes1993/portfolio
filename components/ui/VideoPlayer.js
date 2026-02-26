@@ -246,6 +246,7 @@ export default function VideoPlayer({ src, poster }) {
             value={progress}
             onChange={handleSeek}
             className="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer touch-none"
+            aria-label="Video progress timeline"
           />
         </div>
 
@@ -256,6 +257,7 @@ export default function VideoPlayer({ src, poster }) {
                 onClick={() => skip(-10)}
                 className="text-white/70 hover:text-white transition-colors group/skip hidden sm:block p-1"
                 title="-10s"
+                aria-label="Skip backward 10 seconds"
               >
                 <svg
                   className="w-5 h-5 md:w-6 md:h-6 fill-current group-hover/skip:-translate-x-0.5 transition-transform"
@@ -268,6 +270,7 @@ export default function VideoPlayer({ src, poster }) {
               <button
                 onClick={togglePlay}
                 className="text-white hover:text-amber-500 transition-colors transform hover:scale-110 p-1"
+                aria-label={playing ? "Pause video" : "Play video"}
               >
                 {playing ? (
                   <svg
@@ -290,6 +293,7 @@ export default function VideoPlayer({ src, poster }) {
                 onClick={() => skip(10)}
                 className="text-white/70 hover:text-white transition-colors group/skip hidden sm:block p-1"
                 title="+10s"
+                aria-label="Skip forward 10 seconds"
               >
                 <svg
                   className="w-5 h-5 md:w-6 md:h-6 fill-current group-hover/skip:translate-x-0.5 transition-transform"
@@ -308,6 +312,7 @@ export default function VideoPlayer({ src, poster }) {
               <button
                 onClick={toggleMute}
                 className="text-white/90 hover:text-white transition-colors relative z-10 p-1"
+                aria-label={volume === 0 ? "Unmute video" : "Mute video"}
               >
                 {volume === 0 ? (
                   <svg
@@ -352,6 +357,7 @@ export default function VideoPlayer({ src, poster }) {
                     value={volume}
                     onChange={handleVolumeSeek}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    aria-label="Video volume"
                   />
                 </div>
               </motion.div>
@@ -367,6 +373,7 @@ export default function VideoPlayer({ src, poster }) {
             <button
               onClick={toggleFullscreen}
               className="text-white/90 hover:text-amber-500 transition-colors p-1"
+              aria-label="Toggle fullscreen"
             >
               <svg
                 className="w-5 h-5 md:w-6 md:h-6"
