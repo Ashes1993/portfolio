@@ -146,10 +146,10 @@ function DataToUISlider() {
         <div className="absolute inset-0 opacity-20 blur-2xl overflow-hidden pointer-events-none">
           <Image
             src="/notld.jpg"
-            alt="Background Glow"
+            alt="Background Glow Effect"
             fill
             className="object-cover object-center"
-            quality={30} // Aggressive compression since it is heavily blurred
+            quality={31} // Aggressive compression since it is heavily blurred
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
